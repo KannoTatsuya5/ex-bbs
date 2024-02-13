@@ -6,9 +6,11 @@
     <title>Document</title>
 </head>
 <body>
-	<form th:action="@{/bbs/insert}" method="post">
+	<form th:action="@{/bbs/insert}" th:object="${articleForm}" method="post">
+		<div th:errors="*{name}" style="color:red">名前を入力してください</div>
 		<label for="article_name">名前: </label>
 		<input type="text" name="name" id="article_name"><br>
+		<div th:errors="*{content}" style="color:red">名前を入力してください</div>
 		<label for="article_content">内容: </label>
 		<textarea name="content" id="article_content" cols="25" rows="5"></textarea><br>
 		<button type="submit">記事投稿</button>
@@ -27,24 +29,22 @@
 			コメント者名：<span th:text="${comment.name}">コメント太郎</span><br>
 			コメント内容：<pre><span th:text="${comment.content}">コメント投稿内容</span></pre>
 		</div>
-		<!-- <form th:action="@{/joinedbbs/postcomment}" th:object="${joinedCommentForm}" method="post">
+		<form th:action="@{/bbs/insertComment}" th:object="${commentForm}" method="post">
 			<input type="hidden" name="articleId" th:value="${article.id}">
-			<div th:if="${article.id == joinedCommentForm.articleId}">
-				<div th:errors="*{name}" class="error-messages">エラー！</div>
+			<div th:if="${article.id == commentForm.articleId}">
+				<div th:errors="*{name}" style="color:red">名前を入力してください</div>
 			</div>
-			名前:<br>
-			<input type="text" name="name" th:if="${article.id == joinedCommentForm.articleId}" th:field="*{name}" th:errorclass="error-input" value="コメント太郎">
-			<input type="text" name="name" th:if="${article.id != joinedCommentForm.articleId}">
+			<label for="comment_name">名前</label><br>
+			<input type="text" name="name" id="comment_name">
 			<br>
-			<div th:if="${article.id == joinedCommentForm.articleId}">
-				<div th:errors="*{content}" class="error-messages">エラー！</div>
+			<label for="comment_content">コメント</label><br>
+			<div th:if="${article.id == commentForm.articleId}">
+				<div th:errors="*{content}" style="color:red">エラー！</div>
 			</div>
-			コメント:<br>
-			<textarea name="content" th:if="${article.id == joinedCommentForm.articleId}" th:field="*{content}" th:errorclass="error-input" rows="5" cols="25">コメント投稿内容</textarea>
-			<textarea name="content" th:if="${article.id != joinedCommentForm.articleId}" rows="5" cols="25"></textarea>
+			<textarea name="content" id="comment_content" cols="25" rows="5"></textarea>
 			<br>
 			<input type="submit" value="コメント投稿" >
-		</form> -->
+		</form>
 		<hr>
 	</div>
 </body>

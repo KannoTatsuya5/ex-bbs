@@ -1,11 +1,15 @@
 package com.example.exbbs.form;
 
+import jakarta.validation.constraints.NotBlank;
+
 public class CommentForm {
     /* ArticleID */
     private Integer articleId;
     /* 名前 */
+    @NotBlank(message = "名前を入力してください")
     private String name;
     /* 内容 */
+    @NotBlank(message = "コメントを入力してください")
     private String content;
 
     public Integer getArticleId() {
