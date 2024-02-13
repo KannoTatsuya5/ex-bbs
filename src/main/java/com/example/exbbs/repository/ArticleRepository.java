@@ -71,7 +71,7 @@ public class ArticleRepository {
             ON 
                 a.id = c.article_id
             ORDER BY 
-                a.id asc;
+                a.id asc, c.id asc;
                 """;
         
         List<Article> articleList = template.query(sql,ARTICLE_COMMENT_RESULTSET);
@@ -96,7 +96,7 @@ public class ArticleRepository {
      * @param id
      */
     public void deleteArticle(Integer id) {
-        String sql = "DELETE FROM articles WHERE id = :id";
+        String sql = "with comment_del as (delete from comments where article_id = :id returning*) delete from articles where id in (select article_id from comment_del ) ";
         SqlParameterSource param = new MapSqlParameterSource("id",id);
         template.update(sql, param);
     }
